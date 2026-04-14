@@ -1,0 +1,321 @@
+{
+  "id": "tpl-3389012063",
+  "name": "Manufacturing Traceability for Kanban",
+  "description": "Manufacturing Traceability for Kanban replenishes inventory and predicts PLC signals; applies decision gates and observability; orchestrates via SCADA to reduce scrap.",
+  "industry": "Manufacturing",
+  "pattern": "Planner-Executor",
+  "complexity": "Advanced",
+  "rating": 4.8,
+  "downloads": 37214,
+  "favorites": 7058,
+  "executionTime": "7 min",
+  "tags": [
+    "supply-chain",
+    "oee",
+    "planner-executor",
+    "manufacturing"
+  ],
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Line Intake",
+      "description": "Collect, validate and normalize quality records from MES; attach a runId and timestamp for traceability."
+    },
+    {
+      "id": "planner-0",
+      "name": "Planner",
+      "description": "Execute planner phase for the Planner-Executor pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "executor-1",
+      "name": "Executor",
+      "description": "Execute executor phase for the Planner-Executor pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "defect-detection-0",
+      "name": "Defect Detection",
+      "description": "Defect Detection across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "traceability-1",
+      "name": "Traceability",
+      "description": "Traceability across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "in-process-check-2",
+      "name": "In-Process Check",
+      "description": "In-Process Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "finalize",
+      "name": "Production Report",
+      "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to QMS; return response JSON for the client."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "agentbridge",
+      "data": {
+        "label": "Line Intake",
+        "description": "Collect, validate and normalize quality records from MES; attach a runId and timestamp for traceability.",
+        "nodeType": "input",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 60,
+        "y": 120
+      }
+    },
+    {
+      "id": "planner-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Planner",
+        "description": "Execute planner phase for the Planner-Executor pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 310,
+        "y": 120
+      }
+    },
+    {
+      "id": "executor-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Executor",
+        "description": "Execute executor phase for the Planner-Executor pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 560,
+        "y": 120
+      }
+    },
+    {
+      "id": "defect-detection-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Defect Detection",
+        "description": "Defect Detection across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 810,
+        "y": 120
+      }
+    },
+    {
+      "id": "traceability-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Traceability",
+        "description": "Traceability across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1060,
+        "y": 120
+      }
+    },
+    {
+      "id": "in-process-check-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "In-Process Check",
+        "description": "In-Process Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1310,
+        "y": 120
+      }
+    },
+    {
+      "id": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "Production Report",
+        "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to QMS; return response JSON for the client.",
+        "nodeType": "output",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1560,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "intake",
+      "target": "planner-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-1",
+      "source": "planner-0",
+      "target": "executor-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-2",
+      "source": "executor-1",
+      "target": "defect-detection-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-3",
+      "source": "defect-detection-0",
+      "target": "traceability-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-4",
+      "source": "traceability-1",
+      "target": "in-process-check-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-5",
+      "source": "in-process-check-2",
+      "target": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    }
+  ],
+  "preview": "Line Intake → Planner → Executor → Defect Detection → Traceability → In-Process Check → Production Report",
+  "featured": false,
+  "createdAt": "2025-12-14T14:18:37.637Z",
+  "author": "AgentBridge Team",
+  "deployments": 3746,
+  "lastDeployed": "2026-04-10T14:10:03.318Z",
+  "configuration": {
+    "provider": "gcp",
+    "region": "us-west-2",
+    "compute": "memory-optimized"
+  },
+  "healthStatus": "degraded",
+  "deploymentCount": 1883,
+  "githubRepo": "https://github.com/agentbridge/manufacturing-traceability-for-kanban",
+  "maintainer": "AgentBridge Team",
+  "agenticLayers": {
+    "reasoning": {
+      "modelType": "gpt-4o",
+      "reasoningPattern": "ReAct",
+      "contextWindow": 128000,
+      "memorySystem": "hybrid",
+      "decisionFramework": "Multi-Criteria Decision Analysis"
+    },
+    "orchestration": {
+      "workflowEngine": "n8n",
+      "coordinationPattern": "centralized",
+      "failoverStrategy": "retry",
+      "loadBalancing": "intelligent"
+    },
+    "protocol": {
+      "communicationProtocol": "MCP",
+      "messageFormat": "JSON",
+      "authenticationMethod": "OAuth2",
+      "encryptionStandard": "AES-256"
+    },
+    "governance": {
+      "policyEngine": "OPA",
+      "complianceStandards": [
+        "SOC2",
+        "GDPR"
+      ],
+      "auditTrail": true,
+      "riskAssessment": "medium",
+      "dataClassification": "internal"
+    },
+    "observability": {
+      "metricsCollection": "Prometheus",
+      "loggingFramework": "ELK",
+      "tracingSystem": "Jaeger",
+      "alertingRules": [],
+      "dashboardConfig": {
+        "layout": "grid",
+        "widgets": [
+          "metrics",
+          "logs",
+          "traces"
+        ],
+        "refreshInterval": 30
+      }
+    },
+    "intelligence": {
+      "learningCapability": "online",
+      "knowledgeBase": "vector-db",
+      "adaptationMechanism": "ml-based",
+      "performanceOptimization": "ai-driven"
+    }
+  },
+  "businessFunction": "data-preparation-node",
+  "autonomyLevel": "semi-autonomous",
+  "cognitiveCapabilities": [
+    {
+      "name": "Pattern Recognition",
+      "description": "Identifies patterns in business processes",
+      "confidenceLevel": 0.85,
+      "lastUpdated": "2026-04-14T14:18:37.690Z"
+    }
+  ],
+  "roiMetrics": {
+    "costSavings": 40301,
+    "timeReduction": 64,
+    "accuracyImprovement": 10,
+    "throughputIncrease": 60,
+    "errorReduction": 18
+  },
+  "complianceFramework": {
+    "standards": [
+      "SOC2",
+      "GDPR",
+      "ISO27001"
+    ],
+    "certifications": [
+      "SOC2 Type II"
+    ],
+    "auditFrequency": "monthly",
+    "lastAudit": "2026-03-23T07:36:33.861Z"
+  },
+  "scalingPolicy": {
+    "minInstances": 1,
+    "maxInstances": 10,
+    "scaleUpThreshold": 80,
+    "scaleDownThreshold": 20,
+    "cooldownPeriod": 300
+  }
+}
